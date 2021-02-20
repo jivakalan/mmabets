@@ -5,16 +5,30 @@ Created on Thu Feb 18 23:16:05 2021
 @author: kalan
 """
 
-from bs4 import BeautifulSoup
 import requests
+import bs4 as bs
+import string
+import pandas as pd
 
-page = requests.get("https://www.bestfightodds.com")
-                    
-soup=BeautifulSoup(page.content, 'lxml')
-print(soup.prettify())
-
-
+alphabet = string.ascii_lowercase
 
 
 
-aa=soup.find('table', attrs={'class':'odds-table'})
+for letter in alphabet:
+    url ="http://ufcstats.com/statistics/fighters?char=%s&page=all" %letter
+    print(url)
+
+r = requests.get(url)
+soup = bs.BeautifulSoup(r.content,'lxml')
+
+afighters=[]
+for a in soup.find_all('a', href=True):
+    if "fighter-details" in a['href']:
+        print(a['href'])
+        afighters.append(a['href'])
+uniq_afighters = set(afighters)
+    
+
+
+dfs = pd.read_html("https://www.bestfightodds.com")
+
