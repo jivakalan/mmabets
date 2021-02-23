@@ -108,9 +108,6 @@ for fighter in fighters:
                 cnt+=1      
                 
 #TO DO
-#1 add fighter names DONE--took more like...2-3 hours haha but not hard
-
-#5 add exception for when no round by round data exists DONE - try, except
 
 #2 def update() --delta update - get ready to test for JairzinhoRozenstruik CirylGane
     #Ciryl Gane -787bb1f087ccff8a
@@ -129,8 +126,3 @@ for fighter in fighters:
     #run on GCP rather than local machine for 12 hours? 
     #1hr
         
-test={}
-for a in soup.find_all('a', href=True, text=True):
-    if "fighter-details/93fe7332d16c6ad9" in a['href']:
-        print(a.text)
-        test[a['href']] = a.text
