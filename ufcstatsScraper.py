@@ -44,7 +44,7 @@ def get_all_fighter_pages():
 def get_all_fights():
     
     with open('ufcfighters.json','r') as fp:
-        all_fighters = json.load(fp)
+        fighters = json.load(fp)
     
     #fighters =list(all_fighters.keys())[0:10]
     fighter_count=0
