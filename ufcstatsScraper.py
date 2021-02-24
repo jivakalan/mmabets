@@ -5,6 +5,7 @@ import pandas as pd
 import time as t  
 import json
 #import sqlite3
+import pickle
 
 ##############################################################################
 def get_all_fighter_pages():
@@ -45,7 +46,7 @@ def get_all_fights():
     with open('ufcfighters.json','r') as fp:
         all_fighters = json.load(fp)
     
-    fighters =list(all_fighters.keys())[0:100]
+    #fighters =list(all_fighters.keys())[0:10]
     fighter_count=0
     ufcfightdata={}
     
@@ -67,14 +68,23 @@ def get_all_fights():
                         pass
                     cnt+=1   
                      
-        if fighter_count%5 ==0:
-            print(fighter_count,'fighters have been processed')
+        if fighter_count%100 ==0:
+            print(fighter_count,'fighters have been processed', t.time()-start,'seconds have elapsed')
         
     
     stop = t.time()   
     time= stop-start 
     print('This took %s seconds' %time)  
-                                     
+    print('pickling...')
+    with open('ufcfightdata.pickle','wb') as handle:
+        pickle.dump(ufcfightdata,handle,protocol=pickle.HIGHEST_PROTOCOL)  
+    
+    print('pickled like a briny cucumber')          
+                 
     return ufcfightdata     
 
+
+
+
+    
 

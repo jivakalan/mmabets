@@ -8,3 +8,5 @@ Created on Tue Feb 23 17:21:07 2021
 import ufcstatsScraper
 
 ufcstatsScraper.get_all_fights()
+
+
