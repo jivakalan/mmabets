@@ -174,28 +174,47 @@ dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Aug','Nov','Dec']
 fighters =[]
 fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
 
-ufcfightdim={}
+ufcfightdatedim={}
+ufcfightid_dim={}
 
 for fighter in fighters:
-    ufcfightdim[fighter[36:52]]={}
+    ufcfightdatedim[fighter[36:52]]={}
     
     r = requests.get(fighter)
     soup = bs.BeautifulSoup(r.content,'lxml')
 
-
+    cnt=0
+    
     for p in soup.find_all('p',attrs={"class":"b-fight-details__table-text"} ):
         if any(x in p.text for x in dates):
+            print(p.text,cnt)
 
-            ufcfightdim[fighter[36:52]][p.text.strip()]={}
-            
+            ufcfightdatedim[fighter[36:52]][cnt] = p.text.strip()
+            cnt+=1
+    
+    ufcfightid_dim[fighter[36:52]]={}
+    
+    cnt=0
     for a in soup.find_all('a', href=True):
         if "fight-details" in a['href']:
            # print(a.text,a['href'])
-            if a['href'] not in ufcfightdim and a.text !='next' and 'Matchup' not in a.text:            
-                for k in ufcfightdim[fighter[36:52]]:
-                    try:
-                        ufcfightdim[fighter[36:52]][k] = {a['href']:a.text}
-                    except ValueError:
-                        pass
+            if a['href'] not in ufcfightdim and a.text !='next' and 'Matchup' not in a.text:
+                                
+                ufcfightid_dim[fighter[36:52]][cnt] = {a['href']: a.text}
+                cnt+=1
+        
+                
+ufcfightdatedim_df = pd.DataFrame()
+for fighter in ufcfightdatedim:
+    print(fighter)
+    ufcfightdatedim_df['Fight_Index']= pd.DataFrame.from_dict(ufcfightdatedim.values()).T
+
+    ufcfightdatedim_df['Fight_Date']= ufcfightdatedim.values()
+    
+testdm = pd.DataFrame(columns =['Fight_ID','Fight_Index','Fight_Date'])
+testdm['Fight_Index']= 
 
 
+testdf= pd.DataFrame.from_dict(ufcfightdatedim.values()).
+for
+testdf['Fighter_ID'] = ufcfightdatedim
