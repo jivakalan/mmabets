@@ -36,10 +36,9 @@ def get_all_fighter_pages():
     for i in all_fighters:
         for j,k in all_fighters[i].items():
             all_fighters[i][j] = ' '.join(k)
-    # for i in all_fighters:
-    #     all_fighters[i] = ' '.join(all_fighters[i])
-        
+
     return all_fighters
+
 ##############################################################################
 def get_all_fights():
     
@@ -83,7 +82,7 @@ def get_all_fights():
                  
     return ufcfightdata     
 
-
+##############################################################################
 
 
     

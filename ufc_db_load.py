@@ -5,6 +5,7 @@ Created on Tue Feb 23 17:20:26 2021
 @author: kalan
 """
 
+import sqlite3
 
 ##############################################################################       
 
@@ -17,6 +18,7 @@ Created on Tue Feb 23 17:20:26 2021
 ##############################################################################       
 
 # def db_insert():
+    # #run once a month (scheduled task)
     
 #     def fighter_dic_to_df()
 #         fighter_id, fighter_name = [],[]
@@ -45,60 +47,109 @@ Created on Tue Feb 23 17:20:26 2021
 
 
 
-# #run once a month (scheduled task)
+
 # all_fighters = get_all_fighter_pages()  #19 seconds for 3597 fighters
 # #save as json
 # with open('ufcfighters.json','w') as fp:
 #     json.dump(all_fighters,fp)
-# #get_all_fights can take 12 hours-only run on test data 
-# #run test this week 
-# #run update sat/sun and see - can I afford to run this once a week 
+# #get_all_fights can take 2.5 hours-only run on test data 
+
 # ufcfightdata = get_all_fights(fighters)                
-# #fighter table insert           
+ #fighter table insert           
 # db_insert()
+# #PICKLE testing data with timestamp
+# with open('TESTufcfightdata.pickle','wb') as handle:
+#     pickle.dump(ufcfightdata,handle,protocol=pickle.HIGHEST_PROTOCOL)
 
 
 ##############################################################################
 
 
-# def fight_df_readr():
-   # with open('ufcfightdata.pickle','rb') as handle:
-   #   test= pickle.load(handle)
-    
-
-# tonyferg= ufcfightdata['22a92d7f62195791'][1]['http://ufcstats.com/fight-details/d395828f5cb045a5']
-# tf1=tonyferg[1]
-# tf3=tonyferg[3]
-
-
-# if tonyferg[1]: 
-#     tf1['Round']=list(tf1.columns[9])[1:6]
-#     tf1.columns=['Fighter','Knockdowns','Significant_Strikes','Significant_Strike_pct','Total_Strikes','Takedowns','Takedown_pct','Submission_Attempt','Rev','Control_Time','Round']
-    
-# else:
-#     tf3['Round']=list(tf3.columns[0])[1:6]
-#     del tf3['Unnamed: 9_level_0']
-#     tf3.columns=['Fighter','Significant_Strikes','Significant_Strike_pct','Head','Body','Leg','Distance','Clinch','Ground','Round']
 
 
 
-# def pd_df_spltr(tf1):
+#define function to split up table data to represent just one fighter
+def pd_df_spltr(df):
         
-#     for column in tf1.columns:
+    for column in df.columns:
         
-#         if column =='Fighter':
-#             tf1[['Fighter_1_First_Name','Fighter_1_Last_Name','Fighter_2_First_Name','Fighter_2_Last_Name']] = tf1[column].str.split(" ", expand=True)
-#         elif column =='Round':
-#             continue
-#         else:
-#             tf1[['%s_0' %column,'%s_1' %column]] = tf1[column].str.split("  ", expand=True)
+        if column =='Fighter':
+            continue #don't split fighter name 
+        elif column =='Round':
+            continue
+        else:
+            df[['%s_0' %column,'%s_1' %column]] = df[column].str.split("  ", expand=True)
             
-
-#     return tf1
-
-# pd_df_spltr(tf3)
+    return df
 
 
+def data_cleansing(ufcfightdata):
+
+    #delete the tables that are unneccessary
+    for fighter in ufcfightdata:
+        for ft_index,fightdict in ufcfightdata[fighter].items():
+            for fight, listdf in  ufcfightdata[fighter][ft_index].items():
+                del listdf[0],listdf[1]
+                
+    # and clean the other two tables            
+    for fighter in ufcfightdata:
+        for ft_index,fightdict in ufcfightdata[fighter].items():
+            for fight, listdf in  ufcfightdata[fighter][ft_index].items():
+                
+                for cntr in range(0,len(listdf)):         
+                    
+                    if cntr ==0:
+                        ##create a column for Rounds
+                        listdf[cntr]['Round'] = list(range(1,len(listdf[cntr].columns[0])))
+                        listdf[cntr].columns = ['Fighter','Knockdowns','Significant_Strikes','Significant_Strike_pct','Total_Strikes','Takedowns','Takedown_pct','Submission_Attempt','Rev','Control_Time','Round']
+                    elif cntr ==1:
+                        listdf[cntr]['Round'] = list(range(1,len(listdf[cntr].columns[0])))
+                        del listdf[cntr]['Unnamed: 9_level_0']
+                        listdf[cntr].columns  = ['Fighter','Significant_Strikes','Significant_Strike_pct','Head','Body','Leg','Distance','Clinch','Ground','Round']
+     
+                    else:
+                        del listdf[cntr]
+                        
+    return ufcfightdata
+            
+##############################################################################
+
+import pickle
+#read in data
+with open('TESTufcfightdata.pickle','rb') as handle:
+    ufcfightdata= pickle.load(handle)
+#cleanse the data
+data_cleansing(ufcfightdata)
+
+for fighter in ufcfightdata:
+    for ft_index,fightdict in ufcfightdata[fighter].items():
+        for fight, listdf in  ufcfightdata[fighter][ft_index].items():
+            for df in listdf:
+                pd_df_spltr(df)
+                df['Fighter_ID'] =fighter
+                
+                
+for fighter in ufcfightdata:
+    sqliteConn = sqlite3.connect('mmabets.db')
+    c= sqliteConn.cursor()
+    
+    for ft_index,fightdict in ufcfightdata[fighter].items():
+        
+        for fight, listdf in  ufcfightdata[fighter][ft_index].items():
+            for df in listdf:
+                #import data to fighter_data table
+                df.to_sql("fighter_data", sqliteConn, if_exists ='append',index=False)
+                sqliteConn.commit()
+                     
+        #close the cursor/disconnect from db 
+        c.close()
+        sqliteConn.close()
+
+
+
+#IMPORT FIGHT_DIM TABLE 
+
+get all tony fergus fight+fightids+date
 
 
 
@@ -117,8 +168,34 @@ Created on Tue Feb 23 17:20:26 2021
     #"http://ufcstats.com/fighter-details/22a92d7f62195791"
   #  (tomorrow)
   
-#4 full run (today!):)
-    #run on Azure
-    #1hr
+
+dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Aug','Nov','Dec']
+
+fighters =[]
+fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
+
+ufcfightdim={}
+
+for fighter in fighters:
+    ufcfightdim[fighter[36:52]]={}
     
+    r = requests.get(fighter)
+    soup = bs.BeautifulSoup(r.content,'lxml')
+
+
+    for p in soup.find_all('p',attrs={"class":"b-fight-details__table-text"} ):
+        if any(x in p.text for x in dates):
+
+            ufcfightdim[fighter[36:52]][p.text.strip()]={}
+            
+    for a in soup.find_all('a', href=True):
+        if "fight-details" in a['href']:
+           # print(a.text,a['href'])
+            if a['href'] not in ufcfightdim and a.text !='next' and 'Matchup' not in a.text:            
+                for k in ufcfightdim[fighter[36:52]]:
+                    try:
+                        ufcfightdim[fighter[36:52]][k] = {a['href']:a.text}
+                    except ValueError:
+                        pass
+
 
