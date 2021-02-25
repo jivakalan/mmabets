@@ -127,6 +127,7 @@ for fighter in ufcfightdata:
             for df in listdf:
                 pd_df_spltr(df)
                 df['Fighter_ID'] =fighter
+                df['Fight_ID'] = fight[34:50]
                 
                 
 for fighter in ufcfightdata:
@@ -136,22 +137,23 @@ for fighter in ufcfightdata:
     for ft_index,fightdict in ufcfightdata[fighter].items():
         
         for fight, listdf in  ufcfightdata[fighter][ft_index].items():
-            for df in listdf:
+            for df in range(0,len(listdf)):
+                if df==0:
+                    
+                
                 #import data to fighter_data table
-                df.to_sql("fighter_data", sqliteConn, if_exists ='append',index=False)
-                sqliteConn.commit()
-                     
+                    listdf[df].to_sql("fighter_round_fact", sqliteConn, if_exists ='append',index=False)
+                    sqliteConn.commit()
+                else:
+                    listdf[df].to_sql("fight_area_round_fact", sqliteConn, if_exists ='append',index=False)
+                    sqliteConn.commit()                    
         #close the cursor/disconnect from db 
-        c.close()
-        sqliteConn.close()
+    c.close()
+    sqliteConn.close()
 
 
 
 #IMPORT FIGHT_DIM TABLE 
-
-get all tony fergus fight+fightids+date
-
-
 
 #TO DO
 
@@ -163,11 +165,21 @@ get all tony fergus fight+fightids+date
     ##what does the fight ID become for this fight? 
   #2h
   
-#3 read through 4 pandas DFs per fighter in the right manner and insert to table in sqlDB 
-    #test for Ferguson - read to db table - stats by event insert 
-    #"http://ufcstats.com/fighter-details/22a92d7f62195791"
-  #  (tomorrow)
   
+#8 so close... started feb 20- -5th day --
+#left to do - 1) the delta update 2)get the date and win/loss for each fight 
+#3)insert all hhe data
+
+##the testing of the delta update will take a few days(4-6 hours)
+##FINALIZING ALL HTE DATA (another 4-6 hours)
+##then the database construction and etl pipelines will be "DONE"
+## You forgot the bettings odds data!! haha ! add a few days to that...
+----#timeline goes out to mid -next week
+##then build the prediction model (prototype w keras (xgboost)- build in tensorflow -xgb and nn)  :D:D:D (2-3 hours)
+#iterate refine ...i could do this by the weekend!!! 
+##then i'll know ...70% and then BACKTEST
+
+
 
 dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Aug','Nov','Dec']
 
