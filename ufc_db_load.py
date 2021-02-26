@@ -95,9 +95,9 @@ def data_cleansing(ufcfightdata):
     for fighter in ufcfightdata:
         for ft_index,fightdict in ufcfightdata[fighter].items():
             for fight, listdf in  ufcfightdata[fighter][ft_index].items():
-                
-                for cntr in range(0,len(listdf)):         
                     
+                for cntr in range(0,len(listdf)):         
+                    print(listdf[cntr])                    
                     if cntr ==0:
                         ##create a column for Rounds
                         listdf[cntr]['Round'] = list(range(1,len(listdf[cntr].columns[0])))
@@ -167,7 +167,7 @@ for fighter in ufcfightdata:
   
   
 #8 so close... started feb 20- -5th day --
-#left to do - 1) the delta update 2)get the date and win/loss for each fight 
+#left to do - 1) the delta update 
 #3)insert all hhe data
 
 ##the testing of the delta update will take a few days(4-6 hours)
@@ -179,9 +179,11 @@ for fighter in ufcfightdata:
 #iterate refine ...i could do this by the weekend!!! 
 ##then i'll know ...70% and then BACKTEST
 
+###get fight dates and results
 
+##############################################################################
 
-dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Aug','Nov','Dec']
+dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 fighters =[]
 fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
@@ -210,23 +212,45 @@ for fighter in fighters:
     for a in soup.find_all('a', href=True):
         if "fight-details" in a['href']:
            # print(a.text,a['href'])
-            if a['href'] not in ufcfightdim and a.text !='next' and 'Matchup' not in a.text:
+            if a['href'] not in ufcfightid_dim and a.text !='next' and 'Matchup' not in a.text:
                                 
                 ufcfightid_dim[fighter[36:52]][cnt] = {a['href']: a.text}
                 cnt+=1
-        
-                
-ufcfightdatedim_df = pd.DataFrame()
+
 for fighter in ufcfightdatedim:
-    print(fighter)
-    ufcfightdatedim_df['Fight_Index']= pd.DataFrame.from_dict(ufcfightdatedim.values()).T
 
-    ufcfightdatedim_df['Fight_Date']= ufcfightdatedim.values()
+    datedim_df = pd.DataFrame.from_dict(ufcfightdatedim.values()).T
+    datedim_df['Fighter_ID']= fighter
     
-testdm = pd.DataFrame(columns =['Fight_ID','Fight_Index','Fight_Date'])
-testdm['Fight_Index']= 
+    
+    fightid_dimdf = pd.DataFrame() ##columns=['Fighter_ID','Fight_ID','Result'])
+    for fight_index, fightdata in ufcfightid_dim[fighter].items():
+        
+        fightid_dimdf = fightid_dimdf.append( [[fight_index, fighter, str(fightdata.keys())[46:62], str(fightdata.values())[14:]  ]] )
+    
+    
+datedim_df.columns=['Fight_Date','Fighter_ID']
+fightid_dimdf.columns=['Fight_Index','Fighter_ID','Fight_ID','Result']
+
+                
+
+sqliteConn = sqlite3.connect('mmabets.db')
+c= sqliteConn.cursor()
+
+                
+#import data to fighter_data table
+datedim_df.to_sql("fight_date_dim", sqliteConn, if_exists ='append',index=True)
+sqliteConn.commit()
+
+fightid_dimdf.to_sql("fight_id_dim", sqliteConn, if_exists ='append',index=False)
+sqliteConn.commit()
+
+#close the cursor/disconnect from db 
+c.close()
+sqliteConn.close()
+            
+
+##############################################################################
 
 
-testdf= pd.DataFrame.from_dict(ufcfightdatedim.values()).
-for
-testdf['Fighter_ID'] = ufcfightdatedim
+
