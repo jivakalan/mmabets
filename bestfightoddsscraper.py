@@ -36,17 +36,18 @@ def get_BestfightoddsFighters():
 
 #def get_fightodds
 def get_fight_odds():
-    
-    fighter_odds_test=[]
-    fighter_odds_test.append('https://www.bestfightodds.com/fighters/Tony-Ferguson-2568')   
-    fighter_odds_test.append("https://www.bestfightodds.com/fighters/Israel-Adesanya-7845")
-    fighter_odds_test.append("https://www.bestfightodds.com/fighters/Jan-Blachowicz-2371")
+    with open(r'data\fighter_odds.json','r') as fp:
+        fighter_odds = json.load(fp) 
+    # fighter_odds_test=[]
+    # fighter_odds_test.append('https://www.bestfightodds.com/fighters/Tony-Ferguson-2568')   
+    # fighter_odds_test.append("https://www.bestfightodds.com/fighters/Israel-Adesanya-7845")
+    # fighter_odds_test.append("https://www.bestfightodds.com/fighters/Jan-Blachowicz-2371")
     
     # for fighter_url in fighter_odds_test:
     
     finaldf = pd.DataFrame(columns=['Fighter_Name','Open','Close_range_Lower','Close_range_Upper','Event','Fighter_ID'])
     
-    for fighter_url in fighter_odds_test:
+    for fighter_url in fighter_odds:
         
         dfs= pd.read_html(fighter_url)
         df=dfs[0]

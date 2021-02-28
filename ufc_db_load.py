@@ -7,42 +7,45 @@ Created on Tue Feb 23 17:20:26 2021
 
 #import sqlite3
 from helper import load_to_db, pd_df_spltr
+import json
+import time as t 
+import requests
+import bs4 as bs 
 
 ##############################################################################       
 
 #def fight_update():
     # TBD Sunday, Feb 28   
-        # test JairzinhoRozenstruik-2cd428e9606856fd  CirylGane-787bb1f087ccff8a
         # fix not in ufcfightdata condition
-        # next match id 4a704dae3091adaf; does the fight id change? 
-        # match preview id 4a704dae3091adaf#
         #estimate -2hrs
 
     
 ##############################################################################       
 
 def get_fight_end_times():
-    ##still needs work ; 2 fighters-  fix loop input
+    #sometimes missing data - how to treat
     
-    fight_detail_im=pd.DataFrame()
-    for fighter in fighters:
-        
-        
-        for fight_url in fights:
-            fight_details_df = pd.DataFrame()
-            
-            r = requests.get(fight_url)
-            soup = bs.BeautifulSoup(r.content,'lxml')
-            
+    fight_detail_im = pd.DataFrame()
+    for fighter in ufcfightdata:
+        for ft_index,fightdict in ufcfightdata[fighter].items():
+            for fight_url in  ufcfightdata[fighter][ft_index]:
 
-            for a in soup.find_all('i', class_=["b-fight-details__fight-title","b-fight-details__text-item"]):
-                fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])
-
-            for a in soup.find_all('i', attrs={'style': 'font-style: normal'}):    
-                fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])       
-        
-            fight_details_df = fight_details_df.T
-            fight_detail_im= fight_detail_im.append(fight_details_df)
+                fight_details_df = pd.DataFrame()
+                
+                r = requests.get(fight_url)
+                soup = bs.BeautifulSoup(r.content,'lxml')
+                
+    
+                for a in soup.find_all('i', class_=["b-fight-details__fight-title","b-fight-details__text-item"]):
+                    fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])
+    
+                for a in soup.find_all('i', attrs={'style': 'font-style: normal'}):    
+                    fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])       
+            
+                fight_details_df = fight_details_df.T
+                fight_details_df['Fighter_ID'] = fighter
+                fight_details_df['Fight_ID'] = fight_url[34:50]
+                fight_detail_im= fight_detail_im.append(fight_details_df)
              
     fight_detail_im.columns=['Weight_Class','Round_End','Time_End','Fight_format','Referee','Judge1','Judge2','Judge3','Outcome_Detail']
 
@@ -65,22 +68,9 @@ def db_insert_fighter_dim(all_fighters):
     fighter_dic_to_df()
 
     load_to_db(fighter_df,"fighter_dim")
-    
-    #sqliteConn = sqlite3.connect('mmabets.db')
-    #c= sqliteConn.cursor()
-    
-    #import data to relevant table
-    #fighter_df.to_sql("fighter_dim", sqliteConn, if_exists ='append',index=False)
-    #sqliteConn.commit()
-        
 
-    #close the cursor/disconnect from db 
-    #c.close()
-    #sqliteConn.close()
 
 ##############################################################################
-
-
 
 def data_cleansing(ufcfightdata):
 
@@ -123,8 +113,6 @@ def data_cleansing_2():
                     df['Fight_ID'] = fight[34:50]
                                    
     for fighter in ufcfightdata:
-        #sqliteConn = sqlite3.connect('mmabets.db')
-        #c= sqliteConn.cursor()
         
         for ft_index,fightdict in ufcfightdata[fighter].items():
             
@@ -133,18 +121,15 @@ def data_cleansing_2():
                     if df==0:  
                     #import data to fighter_data table
                         load_to_db(listdf[df],"fighter_round_fact")
-                        # listdf[df].to_sql("fighter_round_fact", sqliteConn, if_exists ='append',index=False)
-                        # sqliteConn.commit()
+
                     else:
                         load_to_db(listdf[df],"fight_area_round_fact")
-                        #listdf[df].to_sql("fight_area_round_fact", sqliteConn, if_exists ='append',index=False)
-                        # sqliteConn.commit()                    
-            #close the cursor/disconnect from db 
-        #c.close()
-        #sqliteConn.close()
+
 ##############################################################################
 
 def get_fite_dates_results():
+    with open(r'data\ufcfighters.json','r') as fp:
+        fighters = json.load(fp) 
         
     dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     
@@ -221,6 +206,4 @@ def get_fite_dates_results():
 
 ##############################################################################
 
-
-  
 

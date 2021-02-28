@@ -55,7 +55,7 @@ def get_all_fights():
         fighters = json.load(fp)
 
     
-    #fighters =list(all_fighters.keys())[0:10]
+    #fighters =list(fighters.keys())[0:10]
     fighter_count=0
     ufcfightdata={}
     
