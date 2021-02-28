@@ -11,7 +11,7 @@ import pandas as pd
 import re
 from helper import load_to_db, save_pickle
 
-
+import datetime
 
 def get_BestfightoddsFighters():
     
@@ -27,7 +27,8 @@ def get_BestfightoddsFighters():
     #add_timestamp
     #add filter on ufc fighters only
     #save fighters 
-    save_pickle('fighter_odds.json',fighter_odds)
+    c  = str(datetime.date.today())
+    save_pickle('fighter_odds_%s.json' %c,fighter_odds)
 
     return fighter_odds
 

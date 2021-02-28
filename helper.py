@@ -5,6 +5,8 @@ Created on Fri Feb 26 20:11:22 2021
 @author: kalan
 """
 import pickle
+import json
+import sqlite3
 
 def save_pickle(filename, yourdict):
     #filename must be a string
@@ -26,7 +28,7 @@ def load_to_db(ufcdf,tablename):
     
                     
     #import data to fighter_data table
-    ufcdf.to_sql(tablename, sqliteConn, if_exists ='append',index=True)
+    ufcdf.to_sql(tablename, sqliteConn, if_exists ='append',index=False)
     sqliteConn.commit()
 
     #close the cursor/disconnect from db 

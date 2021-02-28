@@ -6,12 +6,15 @@ import time as t
 import json
 #import sqlite3
 #import pickle
-from helper import save_pickle
+import helper
+# import os 
+import datetime
 
+# os.chdir(r'C:\\Users\\kalan\\Projects\\mmabets') 
 ##############################################################################
 def get_all_fighter_pages():
     alphabet = string.ascii_lowercase
-
+    
     urls = []
     for letter in alphabet:
         url ="http://ufcstats.com/statistics/fighters?char=%s&page=all" %letter
@@ -37,15 +40,21 @@ def get_all_fighter_pages():
     for i in all_fighters:
         for j,k in all_fighters[i].items():
             all_fighters[i][j] = ' '.join(k)
-
+    
+    c  = str(datetime.date.today())
+    
+    with open(r'data\ufcfighters.json_%s' %c,'w') as fp:
+    json.dump(all_fighters,fp)
+    
     return all_fighters
 
 ##############################################################################
 def get_all_fights():
+    c  = str(datetime.date.today())
+    with open(r'data\ufcfighters.json','r') as fp:
+        fighters = json.load(fp)
+
     
-    # with open('ufcfighters.json','r') as fp:
-    #     fighters = json.load(fp)
-    fighters= load_pickle('ufcfighters.json')
     #fighters =list(all_fighters.keys())[0:10]
     fighter_count=0
     ufcfightdata={}
@@ -77,7 +86,7 @@ def get_all_fights():
     print('This took %s seconds' %time)  
     print('pickling...')
     
-    save_pickle('ufcfightdata.pickle',ufcfightdata)
+    helper.save_pickle(r'data\ufcfightdata_%s.pickle' %c,ufcfightdata)
     
     # with open('ufcfightdata.pickle','wb') as handle:
         # pickle.dump(ufcfightdata,handle,protocol=pickle.HIGHEST_PROTOCOL)  

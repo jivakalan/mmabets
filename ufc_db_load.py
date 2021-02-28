@@ -5,8 +5,8 @@ Created on Tue Feb 23 17:20:26 2021
 @author: kalan
 """
 
-import sqlite3
-from helper import load_to_db, load_pickle, pd_df_spltr
+#import sqlite3
+from helper import load_to_db, pd_df_spltr
 
 ##############################################################################       
 
@@ -21,7 +21,7 @@ from helper import load_to_db, load_pickle, pd_df_spltr
     
 ##############################################################################       
 
-def get_fight_end_times:
+def get_fight_end_times():
     ##still needs work ; 2 fighters-  fix loop input
     
     fight_detail_im=pd.DataFrame()
@@ -45,13 +45,15 @@ def get_fight_end_times:
             fight_detail_im= fight_detail_im.append(fight_details_df)
              
     fight_detail_im.columns=['Weight_Class','Round_End','Time_End','Fight_format','Referee','Judge1','Judge2','Judge3','Outcome_Detail']
-             
+
+    load_to_db(fight_detail_im, 'fight_outcome_dim')
+    
 ##############################################################################       
 
-def db_insert_fighter_dim():
+def db_insert_fighter_dim(all_fighters):
     #run once a month (scheduled task)
     
-    def fighter_dic_to_df()
+    def fighter_dic_to_df():
         fighter_id, fighter_name = [],[]
         for i in all_fighters:
             for j,k in all_fighters[i].items():
@@ -146,11 +148,15 @@ def get_fite_dates_results():
         
     dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     
-    fighters =[]
-    fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
+    # fighters =[]
+    # fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
+    # fighters.append('http://ufcstats.com/fighter-details/787bb1f087ccff8a')
+    
     
     ufcfightdatedim={}
     ufcfightid_dim={}
+    
+    start = t.time()
     
     for fighter in fighters:
         ufcfightdatedim[fighter[36:52]]={}
@@ -162,7 +168,7 @@ def get_fite_dates_results():
         
         for p in soup.find_all('p',attrs={"class":"b-fight-details__table-text"} ):
             if any(x in p.text for x in dates):
-                print(p.text,cnt)
+                #print(p.text,cnt)
     
                 ufcfightdatedim[fighter[36:52]][cnt] = p.text.strip()
                 cnt+=1
@@ -177,40 +183,40 @@ def get_fite_dates_results():
                                     
                     ufcfightid_dim[fighter[36:52]][cnt] = {a['href']: a.text}
                     cnt+=1
+                    
+    stop = t.time()         
+    time= stop-start 
+    print('This took %s seconds' %time)  
+      
+ 
+    datedim_df = pd.DataFrame()
+    fightid_dimdf = pd.DataFrame()
     
     for fighter in ufcfightdatedim:
+
+        df = pd.DataFrame.from_dict(ufcfightdatedim[fighter].items())
+        df['Fighter_Id'] = fighter 
     
-        datedim_df = pd.DataFrame.from_dict(ufcfightdatedim.values()).T
-        datedim_df['Fighter_ID']= fighter
+        datedim_df = datedim_df.append(df)        
         
         
-        fightid_dimdf = pd.DataFrame() ##columns=['Fighter_ID','Fight_ID','Result'])
+        
         for fight_index, fightdata in ufcfightid_dim[fighter].items():
             
             fightid_dimdf = fightid_dimdf.append( [[fight_index, fighter, str(fightdata.keys())[46:62], str(fightdata.values())[14:]  ]] )
         
+ 
         
-    datedim_df.columns=['Fight_Date','Fighter_ID']
+    datedim_df.columns=['Fight_Index','Fight_Date','Fighter_ID']
     fightid_dimdf.columns=['Fight_Index','Fighter_ID','Fight_ID','Result']
+    
+
     
     #import data to fighter_data table                 
     load_to_db(datedim_df,"fight_date_dim")
     load_to_db(fightid_dimdf,"fight_id_dim")
     
-    #sqliteConn = sqlite3.connect('mmabets.db')
-    #c= sqliteConn.cursor()
-    
-                    
-    #import data to fighter_data table
-    #datedim_df.to_sql("fight_date_dim", sqliteConn, if_exists ='append',index=True)
-    #sqliteConn.commit()
-    
-    #fightid_dimdf.to_sql("fight_id_dim", sqliteConn, if_exists ='append',index=False)
-    #sqliteConn.commit()
-    
-    #close the cursor/disconnect from db 
-    #c.close()
-    #sqliteConn.close()
+
             
 
 ##############################################################################
