@@ -10,8 +10,9 @@ import bs4 as bs
 import pandas as pd
 import re
 from helper import load_to_db, save_pickle
-
+import json
 import datetime
+import time as t
 
 def get_BestfightoddsFighters():
     
@@ -38,6 +39,8 @@ def get_BestfightoddsFighters():
 def get_fight_odds():
     with open(r'data\fighter_odds.json','r') as fp:
         fighter_odds = json.load(fp) 
+    
+    fighter_odds = list(fighter_odds.keys())[100:]
     # fighter_odds_test=[]
     # fighter_odds_test.append('https://www.bestfightodds.com/fighters/Tony-Ferguson-2568')   
     # fighter_odds_test.append("https://www.bestfightodds.com/fighters/Israel-Adesanya-7845")
@@ -47,8 +50,9 @@ def get_fight_odds():
     
     finaldf = pd.DataFrame(columns=['Fighter_Name','Open','Close_range_Lower','Close_range_Upper','Event','Fighter_ID'])
     
+    start = t.time()  
     for fighter_url in fighter_odds:
-        
+      #  print(fighter_url)
         dfs= pd.read_html(fighter_url)
         df=dfs[0]
         df.columns =['Fighter_Name','Open','Close_range_Lower','Remove','Close_range_Upper','Remove1','Remove2','Event']
@@ -68,6 +72,9 @@ def get_fight_odds():
     
     finaldf3= finaldf1.join(finaldf2)
     
+    stop = t.time()   
+    time= stop-start 
+    print('This took %s seconds' %time)  
     
     load_to_db(finaldf3,'fight_odd_fact')
     
