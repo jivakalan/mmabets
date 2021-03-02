@@ -14,14 +14,20 @@ import json
 import datetime
 import time as t
 
+
+
 def get_BestfightoddsFighters():
     
+    with open(r'data\fighter_odds.json','r') as fp:
+        fighter_odds = json.load(fp)
+        
     url ='https://www.bestfightodds.com'
     r = requests.get(url)
     soup = bs.BeautifulSoup(r.content,'lxml')
     
-    fighter_odds ={}
+   # fighter_odds ={} -if you want to populate brand new file
     for a in soup.find_all(['span','a'], href=re.compile('fighters')):
+        #print(a['href'])
         if "https://www.bestfightodds.com"+ a['href'] not in fighter_odds:        
             fighter_odds["https://www.bestfightodds.com"+ a['href']]= a.text
 
@@ -29,7 +35,7 @@ def get_BestfightoddsFighters():
     #add filter on ufc fighters only
     #save fighters 
     c  = str(datetime.date.today())
-    save_pickle('fighter_odds_%s.json' %c,fighter_odds)
+    save_pickle(r'data\fighter_odds_%s.json' %c,fighter_odds)
 
     return fighter_odds
 
@@ -53,7 +59,7 @@ def get_fight_odds():
     start = t.time()  
     for fighter_url in fighter_odds:
       #  print(fighter_url)
-        dfs= pd.read_html(fighter_url)
+        dfs= pd.read_html("https://www.bestfightodds.com"+fighter_url)
         df=dfs[0]
         df.columns =['Fighter_Name','Open','Close_range_Lower','Remove','Close_range_Upper','Remove1','Remove2','Event']
         df = df[df.index %3 !=0]

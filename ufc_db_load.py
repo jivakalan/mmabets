@@ -6,11 +6,12 @@ Created on Tue Feb 23 17:20:26 2021
 """
 
 #import sqlite3
-from helper import load_to_db, pd_df_spltr
+from helper import load_to_db, pd_df_spltr, load_pickle
 import json
 import time as t 
 import requests
 import bs4 as bs 
+import pickle
 
 ##############################################################################       
 
@@ -24,21 +25,44 @@ import bs4 as bs
 
 def get_fight_end_times():
     #sometimes missing data - how to treat
+    ufcfightdata={}
+ 
+    scores =['23','24','25','26','27','28','29','30','42','43','44','45','46','47','48','49','50']
+    
+    ufcfightdataf= pickle.load( open( "data/ufcfightdata.pickle", "rb" ) )
+    
+    fightersl = list(ufcfightdataf.keys())
+    keys_to_extract = fightersl[1501:]
+    
+    # keys_to_extract = []
+    # for fighter in fighters:
+    #     keys_to_extract.append(fighter[36:52])
+    
+    ufcfightdata = {key: ufcfightdataf[key] for key in keys_to_extract}
+     
+    start = t.time()         
     
     fight_detail_im = pd.DataFrame()
+    
     for fighter in ufcfightdata:
         for ft_index,fightdict in ufcfightdata[fighter].items():
             for fight_url in  ufcfightdata[fighter][ft_index]:
-
+                #print(fight_url)
                 fight_details_df = pd.DataFrame()
                 
                 r = requests.get(fight_url)
                 soup = bs.BeautifulSoup(r.content,'lxml')
                 
-    
+                
+                
                 for a in soup.find_all('i', class_=["b-fight-details__fight-title","b-fight-details__text-item"]):
-                    fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])
-    
+                    
+                    if any(score in a.text for score in scores):
+                        continue
+                        
+                    else:
+                        fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])
+                    
                 for a in soup.find_all('i', attrs={'style': 'font-style: normal'}):    
                     fight_details_df = fight_details_df.append([a.text.replace('\n','').strip()])       
             
@@ -46,7 +70,10 @@ def get_fight_end_times():
                 fight_details_df['Fighter_ID'] = fighter
                 fight_details_df['Fight_ID'] = fight_url[34:50]
                 fight_detail_im= fight_detail_im.append(fight_details_df)
-             
+    stop = t.time()         
+    time= stop-start 
+    print('This took %s seconds' %time)  
+               
     fight_detail_im.columns=['Weight_Class','Round_End','Time_End','Fight_format','Referee','Judge1','Judge2','Judge3','Outcome_Detail']
 
     load_to_db(fight_detail_im, 'fight_outcome_dim')
@@ -103,7 +130,7 @@ def data_cleansing(ufcfightdata):
             
 ##############################################################################
 def data_cleansing_2():
-    
+    start = t.time()
     for fighter in ufcfightdata:
         for ft_index,fightdict in ufcfightdata[fighter].items():
             for fight, listdf in  ufcfightdata[fighter][ft_index].items():
@@ -124,7 +151,10 @@ def data_cleansing_2():
 
                     else:
                         load_to_db(listdf[df],"fight_area_round_fact")
-
+    stop = t.time()         
+    time= stop-start 
+    print('This took %s seconds' %time)  
+    
 ##############################################################################
 
 def get_fite_dates_results():
@@ -137,6 +167,8 @@ def get_fite_dates_results():
     # fighters.append('http://ufcstats.com/fighter-details/22a92d7f62195791')
     # fighters.append('http://ufcstats.com/fighter-details/787bb1f087ccff8a')
     
+    fighters = list(fighters.keys())
+    fighters = fighters[:500]
     
     ufcfightdatedim={}
     ufcfightid_dim={}
