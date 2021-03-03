@@ -5,74 +5,23 @@ Created on Tue Mar  2 12:02:06 2021
 @author: kalan
 """
 
-######################################################################################
-# This file attempts to create a foreign_key for the fighter_dim table 
+# =============================================================================
+# This file attempts to create a foreign_key for the fighter_dim table                
 # such data from bestfightodds and ufcstats can be joined
-#
+# 
 # for example: fighter_ID   from bestfightodds Israel-Adesanya-7845
-#              fighter_name from bestfightodds Israel Adesanya
-#
-#              fighter_ID   from ufcstats      1338e2c7480bdf9e
-#              fighter_name from ufcstats      Israel Adesanya The Last Stylebender
-#       
-####################################################################################
+#               fighter_name from bestfightodds Israel Adesanya
+# 
+#               fighter_ID   from ufcstats      1338e2c7480bdf9e
+#               fighter_name from ufcstats      Israel Adesanya The Last Stylebender
+# =============================================================================
 
-
-
-#import fighter_odds
-
-import json
-with open(r'data\fighter_odds.json','r') as fp:
-    fighter_odds = json.load(fp)
-
-fighter_lst = list(out.keys())
-
-# out={}
-
-cnt=0
-
-for fighter_url in fighter_lst:
-    cnt+=1
-    #print(fighter_url,cnt)
-    r = requests.get("https://www.bestfightodds.com"+fighter_url)
-    soup = bs.BeautifulSoup(r.content,'lxml')
-    
-    for a in soup.find_all('a', href=re.compile('fighters')):
-       
-        if fighter_url not in a['href']:
-            if fighter_url not in out:
-                print(a['href'],'not in the dict',cnt)
-                out[a['href']] = a.text
-                
-c  = str(datetime.date.today())
-save_pickle(r'data\fighter_odds_%s.json' %c,out)
-
-
-with open(r'data\fighter_odds_2021-03-02.json','r') as fp:
-    fighter_odds = json.load(fp)
-    
-df1= pd.DataFrame.from_dict(fighter_odds.items())
-df1.columns =['Fighter_ID','Fighter_Name']
-
-con = sqlite3.connect('mmabets.db')
-
-df2 = pd.read_sql("select * from fighter_dim",con)
-con.close()
-
-
-df2sample = df2.head(1)
-df1sample = df1.head(1)
+#testing fuzzy wuzzy match on strings
+#fuzz.partial_ratio("Israel Adesanya The Last Stylebender", "Tony Ferguson")
 
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-
-#testing fuzzy wuzzy match on strings
-fuzz.partial_ratio("Israel Adesanya The Last Stylebender", "Tony Ferguson")
-
-
-
-df_1 = fuzzy_merge(df2, df1, 'Fighter_Name','Fighter_Name',threshold=90, limit=2)
-
+import helper as h
 
 ###performance concern, re-tool if coming back to this 
 
@@ -97,5 +46,20 @@ def fuzzy_merge(df_1, df_2, key1, key2, threshold=90, limit=2):
     return df_1
 ;
 
-##asve to csv
-#df_1.to_csv('df_1.csv')
+#get the Fighter ODD Ids
+fighter_odds = h.json_load("data\fighter_odds.json")
+
+df1= pd.DataFrame.from_dict(fighter_odds.items())
+df1.columns =['Fighter_ID','Fighter_Name']
+
+#get Fighter DIM Ids
+con = sqlite3.connect('mmabets.db')
+df2 = pd.read_sql("select * from fighter_dim",con)
+con.close()
+
+
+df_1 = fuzzy_merge(df2, df1, 'Fighter_Name','Fighter_Name',threshold=90, limit=2)
+
+
+##save to csv
+df_1.to_csv('df_1.csv')

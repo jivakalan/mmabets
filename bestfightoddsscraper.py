@@ -34,8 +34,8 @@ def get_BestfightoddsFighters():
     #add_timestamp
     #add filter on ufc fighters only
     #save fighters 
-    c  = str(datetime.date.today())
-    save_pickle(r'data\fighter_odds_%s.json' %c,fighter_odds)
+ #   c  = str(datetime.date.today())
+   # save_pickle(r'data\fighter_odds_%s.json' %c,fighter_odds)
 
     return fighter_odds
 
