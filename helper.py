@@ -8,7 +8,13 @@ import pickle
 import json
 import sqlite3
 
-def save_pickle(filename, yourdict):
+def load_json(filename):
+    with open(filename,'r') as fp:
+        fighter_odds = json.load(fp)
+        
+    return fighter_odds
+    
+def save_json(filename, yourdict):
     #filename must be a string
     #yourdict is a dictionary
     with open(filename,'w') as fp:
@@ -19,13 +25,16 @@ def load_pickle(filename):
         yourdict= pickle.load(handle)
     return yourdict
 
+def save_pickle():
+    #code
+
+
 def load_to_db(ufcdf,tablename):
     #load a pandas table to the mmabets db 
     #specify the pandas df and the tablename 
 
     sqliteConn = sqlite3.connect('mmabets.db')
     c= sqliteConn.cursor()
-    
                     
     #import data to fighter_data table
     ufcdf.to_sql(tablename, sqliteConn, if_exists ='replace',index=False)
