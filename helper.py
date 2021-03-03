@@ -28,7 +28,7 @@ def load_to_db(ufcdf,tablename):
     
                     
     #import data to fighter_data table
-    ufcdf.to_sql(tablename, sqliteConn, if_exists ='append',index=False)
+    ufcdf.to_sql(tablename, sqliteConn, if_exists ='replace',index=False)
     sqliteConn.commit()
 
     #close the cursor/disconnect from db 
