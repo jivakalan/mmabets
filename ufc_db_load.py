@@ -29,7 +29,7 @@ def get_fight_end_times():
  
     scores =['23','24','25','26','27','28','29','30','42','43','44','45','46','47','48','49','50']
     
-    ufcfightdataf= pickle.load( open( "data/ufcfightdata.pickle", "rb" ) )
+    ufcfightdataf= pickle.load(open("Extract/Data/ufcfightdata.pickle", "rb"))
     
     fightersl = list(ufcfightdataf.keys())
     keys_to_extract = fightersl[1501:]
