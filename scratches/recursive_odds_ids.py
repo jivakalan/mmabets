@@ -23,7 +23,7 @@ import requests
 import bs4 as bs 
 import json
 import helper as h
-
+import re
 
 class bestfightOddsScraper:
     def __init__(self,):
@@ -35,9 +35,9 @@ class bestfightOddsScraper:
         self.prev_fiter_lst_address = ''
         
         
-    def get_all_bestfightOdds_IDs(self.opponent, self.cnt, self.fighter_lst):
+    def get_all_bestfightOdds_IDs(self):
         
-        for fighter_url in fighter_lst:
+        for fighter_url in self.fighter_lst:
             if fighter_url == opponent:
                 
                 ##extract the web page for the fighter
@@ -52,18 +52,22 @@ class bestfightOddsScraper:
                     if fighter_url not in a['href']:
                         
                         #if the fighter's opponent is not already in the dictoinary
-                        if a['href'] not in fighter_lst:
+                        if a['href'] not in self.fighter_lst:
                                            
                             #add the ID to the new dictionary
-                            fighter_lst.append(a['href'])
+                            self.fighter_lst.append(a['href'])
                               
                             #send the opponent to scrape all the IDs of their opponents
                             opponent=  a['href']
                             
                             #then recursively get the IDs of their opponents
-                            get_all_bestfightOdds_IDs(opponent, cnt, fighter_lst)   
+                            get_all_bestfightOdds_IDs(opponent, self.cnt, self.fighter_lst)
          
-                            
+
+
+
+
+
     def update_fighters():
         #use to update the main fighterID db - run once a week or to get any new FIDs from the 
         #front page of bestfightodds

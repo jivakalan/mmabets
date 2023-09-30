@@ -48,7 +48,7 @@ def get_all_fighter_pages():
 def get_all_fights():
     c  = str(datetime.date.today())
     print('starting...')
-    with open(r'../extract/data/ufcfighters.json', 'r') as fp:
+    with open(r'data/ufcfighters.json', 'r') as fp:
         fighters = json.load(fp)
 
     

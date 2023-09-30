@@ -142,7 +142,7 @@ def data_cleansing_2():
 ##############################################################################
 
 def get_fite_dates_results():
-    with open(r'../extract/data/ufcfighters.json', 'r') as fp:
+    with open(r'data/ufcfighters.json', 'r') as fp:
         fighters = json.load(fp) 
         
     dates =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']

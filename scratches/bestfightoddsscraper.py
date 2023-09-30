@@ -18,9 +18,10 @@ import time as t
 
 def get_BestfightoddsFighters():
     
-    with open(r'data\fighter_odds.json','r') as fp:
+    with open(r'scratches\data\fighter_odds.json','r') as fp:
         fighter_odds = json.load(fp)
-        
+
+
     url ='https://www.bestfightodds.com'
     r = requests.get(url)
     soup = bs.BeautifulSoup(r.content,'lxml')
@@ -43,7 +44,7 @@ def get_BestfightoddsFighters():
 
 #def get_fightodds
 def get_fight_odds():
-    with open(r'data\fighter_odds.json','r') as fp:
+    with open(r'scratces\data\fighter_odds.json','r') as fp:
         fighter_odds = json.load(fp) 
     
     fighter_odds = list(fighter_odds.keys())[100:]
