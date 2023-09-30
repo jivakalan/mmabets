@@ -1,0 +1,30 @@
+1694324025273	geckodriver	INFO	Listening on 127.0.0.1:63759
+1694324028342	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--user-agent=Mozilla/5.0" "--headless" "-- ... 0" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\kalan\\AppData\\Local\\Temp\\rust_mozprofilexFB85s"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1694324029643	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+console.error: "Warning: unrecognized command line flag" "-user-agent"
+1694324029851	Marionette	INFO	Listening on port 63770
+WebDriver BiDi listening on ws://127.0.0.1:63760
+Read port: 63770
+1694324030195	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+DevTools listening on ws://127.0.0.1:63760/devtools/browser/33da9c17-c1ef-493d-ac6a-cacf532eaa27
+1694324058147	geckodriver	INFO	Listening on 127.0.0.1:63814
+1694324061217	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--user-agent=Mozilla/5.0" "--headless" "-- ... 5" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\kalan\\AppData\\Local\\Temp\\rust_mozprofileXTCEUT"
+*** You are running in headless mode.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1694324065364	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+console.error: "Warning: unrecognized command line flag" "-user-agent"
+1694324065701	Marionette	INFO	Listening on port 63836
+WebDriver BiDi listening on ws://127.0.0.1:63815
+Read port: 63836
+1694324066304	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: ({})
+DevTools listening on ws://127.0.0.1:63815/devtools/browser/1ab6a3d1-9cf7-4ccd-8bc2-6a3714644b6c

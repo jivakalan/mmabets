@@ -1,0 +1,116 @@
+Index,ID,Fighter Name,Open,Close_range_lower,Close_range_upper,Event_name,Event_Date,Opponent_Name,Opponent_Open,Opponent_close_range_lower,Opponent_close_range_upper
+0,Jon-Jones-819,Jon Jones,180,180,180,Future Events,N/A,Francis Ngannou,-220,-220,-220
+0,Jon-Jones-819,Jon Jones,-150,-105,-105,Future Events,N/A,Israel Adesanya,130,-115,-115
+0,Jon-Jones-819,Jon Jones,-850,-670,-525,UFC 239: Jones vs. Santos,Jul 6th 2019,Thiago Santos,625,400,485
+0,Jon-Jones-819,Jon Jones,-900,-800,-714,UFC 235: Jones vs. Smith,Mar 2nd 2019,Anthony Smith,600,450,550
+0,Jon-Jones-819,Jon Jones,-200,-333,-290,UFC 232: Jones vs. Gustafsson 2,Dec 29th 2018,Alexander Gustafsson,170,245,250
+0,Jon-Jones-819,Jon Jones,-675,-750,-720,UFC 197: Jones vs. Saint Preux,Apr 23rd 2016,Ovince St. Preux,450,510,550
+0,Jon-Jones-819,Jon Jones,-170,-205,-192,UFC 182: Jones vs. Cormier,Jan 3rd 2015,Daniel Cormier,145,175,177
+0,Jon-Jones-819,Jon Jones,-600,-500,-440,UFC 172: Jones vs. Teixeira,Apr 26th 2014,Glover Teixeira,425,385,390
+0,Jon-Jones-819,Jon Jones,-400,-500,-440,UFC 247: Jones vs. Reyes,Feb 8th 2020,Dominick Reyes,300,350,375
+0,Jon-Jones-819,Jon Jones,-250,-325,-310,UFC 214: Cormier vs. Jones 2,Jul 29th 2017,Daniel Cormier,210,260,265
+0,Jon-Jones-819,Jon Jones,-675,-840,-800,UFC 165: Jones vs. Gustafsson,Sep 21st 2013,Alexander Gustafsson,425,550,660
+0,Jon-Jones-819,Jon Jones,-750,-875,-825,UFC 159: Jones vs. Sonnen,Apr 27th 2013,Chael Sonnen,575,625,685
+0,Jon-Jones-819,Jon Jones,-1300,-840,-750,UFC 152: Jones vs. Belfort,Sep 22nd 2012,Vitor Belfort,700,575,660
+0,Jon-Jones-819,Jon Jones,-500,-510,-510,UFC 145: Jones vs. Evans,Apr 21st 2012,Rashad Evans,400,440,440
+0,Jon-Jones-819,Jon Jones,-400,-475,-475,UFC 140: Jones vs. Machida,Dec 10th 2011,Lyoto Machida,280,420,420
+0,Jon-Jones-819,Jon Jones,-340,-500,-500,UFC 135: Jones vs. Rampage,Sep 24th 2011,Quinton Jackson,280,435,435
+0,Jon-Jones-819,Jon Jones,-225,-215,-215,UFC 128: Shogun vs. Jones,Mar 19th 2011,Mauricio Rua,175,195,195
+0,Jon-Jones-819,Jon Jones,-230,-285,-285,UFC 126: Silva vs. Belfort,Feb 5th 2011,Ryan Bader,170,258,258
+0,Jon-Jones-819,Jon Jones,-610,-752,-752,UFC On Versus 2,Aug 1st 2010,Vladimir Matyushenko,425,602,602
+0,Jon-Jones-819,Jon Jones,-260,-235,-235,UFC on Versus 1: Vera vs. Jones,Mar 21st 2010,Brandon Vera,200,215,215
+0,Jon-Jones-819,Jon Jones,-185,-265,-265,UFC: The Ultimate Fighter 10 Finale,Dec 5th 2009,Matt Hamill,155,225,225
+0,Jon-Jones-819,Jon Jones,-465,-400,-400,UFC 100,Jul 11th 2009,Jake O Brien,345,325,325
+0,Jon-Jones-819,Jon Jones,140,135,135,UFC 94: St-Pierre vs Penn 2,Jan 31st 2009,Stephan Bonnar,-170,-155,-155
+0,Jon-Jones-819,Jon Jones,190,170,170,UFC 87: Seek And Destroy,Aug 9th 2008,Andre Gusmao,-250,-200,-200
+1,Francis-Ngannou-5847,Francis Ngannou,-220,-220,-220,Future Events,N/A,Jon Jones,180,180,180
+1,Francis-Ngannou-5847,Francis Ngannou,-190,114,135,UFC 270,Jan 22nd 2022,Ciryl Gane,165,-160,-133
+1,Francis-Ngannou-5847,Francis Ngannou,-300,-255,-225,UFC 249: Ferguson vs. Gaethje,May 9th 2020,Jairzinho Rozenstruik,250,190,215
+1,Francis-Ngannou-5847,Francis Ngannou,-230,-227,-205,UFC on ESPN 3: Ngannou vs. Dos Santos,Jun 29th 2019,Junior Dos Santos,170,175,187
+1,Francis-Ngannou-5847,Francis Ngannou,130,170,175,UFC on ESPN 1: Ngannou vs. Velasquez,Feb 17th 2019,Cain Velasquez,-170,-210,-195
+1,Francis-Ngannou-5847,Francis Ngannou,-155,200,205,UFC Fight Night 141: Blaydes vs. Ngannou 2,Nov 24th 2018,Curtis Blaydes,115,-250,-240
+1,Francis-Ngannou-5847,Francis Ngannou,-230,-340,-310,UFC 226: Miocic vs. Cormier,Jul 7th 2018,Derrick Lewis,170,255,280
+1,Francis-Ngannou-5847,Francis Ngannou,-160,-176,-170,UFC 220: Miocic vs. Ngannou,Jan 20th 2018,Stipe Miocic,130,150,151
+1,Francis-Ngannou-5847,Francis Ngannou,-230,-230,-220,UFC 218: Holloway vs. Aldo 2,Dec 2nd 2017,Alistair Overeem,170,185,210
+1,Francis-Ngannou-5847,Francis Ngannou,-350,-420,-385,UFC on FOX 23: Shevchenko vs. Pena,Jan 28th 2017,Andrei Arlovski,250,320,335
+1,Francis-Ngannou-5847,Francis Ngannou,-600,-440,-410,UFC Fight Night 102: Lewis vs. Abdurakhimov,Dec 9th 2016,Anthony Hamilton,400,340,350
+1,Francis-Ngannou-5847,Francis Ngannou,-705,-600,-580,UFC on FOX 20: Holm vs. Shevchenko,Jul 23rd 2016,Bojan Mihajlovic,435,450,450
+1,Francis-Ngannou-5847,Francis Ngannou,100,132,140,UFC Fight Night 86: Rothwell vs. Dos Santos,Apr 10th 2016,Curtis Blaydes,-140,-160,-152
+1,Francis-Ngannou-5847,Francis Ngannou,110,-140,-140,UFC on FOX 17: Dos Anjos vs. Cerrone,Dec 19th 2015,Luiz Henrique,-150,120,120
+1,Francis-Ngannou-5847,Francis Ngannou,-225,-144,-133,UFC 260: Miocic vs. Ngannou 2,Mar 27th 2021,Stipe Miocic,190,110,122
+2,Daniel-Cormier-1583,Daniel Cormier,-110,-117,-110,UFC 252: Miocic vs. Cormier 3,Aug 15th 2020,Stipe Miocic,-110,-111,-103
+2,Daniel-Cormier-1583,Daniel Cormier,-150,-146,-139,UFC 241: Cormier vs. Miocic 2,Aug 17th 2019,Stipe Miocic,130,110,126
+2,Daniel-Cormier-1583,Daniel Cormier,-800,-460,-380,UFC 230: Cormier vs. Lewis,Nov 3rd 2018,Derrick Lewis,575,315,360
+2,Daniel-Cormier-1583,Daniel Cormier,140,132,140,UFC 226: Miocic vs. Cormier,Jul 7th 2018,Stipe Miocic,-170,-160,-152
+2,Daniel-Cormier-1583,Daniel Cormier,-380,-345,-340,UFC 220: Miocic vs. Ngannou,Jan 20th 2018,Volkan Oezdemir,260,280,285
+2,Daniel-Cormier-1583,Daniel Cormier,-600,-430,-415,UFC 200: Tate vs. Nunes,Jul 9th 2016,Anderson Silva,400,345,345
+2,Daniel-Cormier-1583,Daniel Cormier,-200,-284,-255,UFC 192: Cormier vs. Gustafsson,Oct 3rd 2015,Alexander Gustafsson,170,215,244
+2,Daniel-Cormier-1583,Daniel Cormier,-130,100,106,UFC 187: Johnson vs. Cormier,May 23rd 2015,Anthony Johnson,110,-126,-120
+2,Daniel-Cormier-1583,Daniel Cormier,145,175,177,UFC 182: Jones vs. Cormier,Jan 3rd 2015,Jon Jones,-170,-205,-192
+2,Daniel-Cormier-1583,Daniel Cormier,-425,-900,-750,UFC 173: Barao vs. Dillashaw,May 24th 2014,Dan Henderson,305,525,600
+2,Daniel-Cormier-1583,Daniel Cormier,-1125,-900,-750,UFC 170: Rousey vs. McMann,Feb 22nd 2014,Patrick Cummins,575,600,600
+2,Daniel-Cormier-1583,Daniel Cormier,210,260,265,UFC 214: Cormier vs. Jones 2,Jul 29th 2017,Jon Jones,-250,-325,-310
+2,Daniel-Cormier-1583,Daniel Cormier,-120,118,120,UFC 210: Cormier vs. Johnson 2,Apr 8th 2017,Anthony Johnson,-110,-140,-138
+2,Daniel-Cormier-1583,Daniel Cormier,-380,-500,-500,UFC 166: Velasquez vs. Dos Santos III,Oct 19th 2013,Roy Nelson,260,375,435
+2,Daniel-Cormier-1583,Daniel Cormier,-350,-375,-375,UFC on FOX 7: Henderson vs. Melendez,Apr 20th 2013,Frank Mir,250,315,335
+2,Daniel-Cormier-1583,Daniel Cormier,-750,-2000,-1700,Strikeforce: Marquardt vs. Saffiedine,Jan 12th 2013,Dion Staring,450,1250,1500
+2,Daniel-Cormier-1583,Daniel Cormier,105,-125,-120,Strikeforce: Barnett vs. Cormier,May 19th 2012,Josh Barnett,-145,100,115
+2,Daniel-Cormier-1583,Daniel Cormier,135,125,125,Strikeforce Grand Prix: Barnett vs. Kharitonov,Sep 10th 2011,Antonio Silva,-165,-145,-145
+2,Daniel-Cormier-1583,Daniel Cormier,-360,-475,-475,Strikeforce: Overeem vs. Werdum,Jun 18th 2011,Jeff Monson,270,420,420
+2,Daniel-Cormier-1583,Daniel Cormier,-800,-800,-800,Strikeforce Challengers 13,Jan 7th 2011,Devin Cole,500,550,550
+2,Daniel-Cormier-1583,Daniel Cormier,-1350,-1300,-1300,Strikeforce: Houston,Aug 21st 2010,Jason Riley,650,850,850
+2,Daniel-Cormier-1583,Daniel Cormier,-310,-335,-335,King Of The Cage: Imminent Danger,Aug 13th 2010,Tony Johnson,230,275,275
+2,Daniel-Cormier-1583,Daniel Cormier,,n/a,,Strikeforce Challengers VII: Johnson vs. Mahe,N/A,John Devine,,n/a,
+2,Daniel-Cormier-1583,Daniel Cormier,,n/a,,Strikeforce Challengers: Kennedy vs Cummings,N/A,Gary Frazier,,n/a,
+3,Stipe-Miocic-1869,Stipe Miocic,130,130,130,Future Events,N/A,Jon Jones,-150,-150,-150
+3,Stipe-Miocic-1869,Stipe Miocic,-110,-111,-103,UFC 252: Miocic vs. Cormier 3,Aug 15th 2020,Daniel Cormier,-110,-117,-110
+3,Stipe-Miocic-1869,Stipe Miocic,130,110,126,UFC 241: Cormier vs. Miocic 2,Aug 17th 2019,Daniel Cormier,-150,-146,-139
+3,Stipe-Miocic-1869,Stipe Miocic,-170,-160,-152,UFC 226: Miocic vs. Cormier,Jul 7th 2018,Daniel Cormier,140,132,140
+3,Stipe-Miocic-1869,Stipe Miocic,130,150,151,UFC 220: Miocic vs. Ngannou,Jan 20th 2018,Francis Ngannou,-160,-176,-170
+3,Stipe-Miocic-1869,Stipe Miocic,-170,-145,-141,UFC 203: Miocic vs. Overeem,Sep 10th 2016,Alistair Overeem,140,121,125
+3,Stipe-Miocic-1869,Stipe Miocic,175,150,160,UFC 198: Werdum vs. Miocic,May 14th 2016,Fabricio Werdum,-225,-185,-175
+3,Stipe-Miocic-1869,Stipe Miocic,-265,-240,-205,UFC 195: Lawler vs. Condit,Jan 2nd 2016,Andrei Arlovski,185,175,220
+3,Stipe-Miocic-1869,Stipe Miocic,-160,-260,-235,UFC Fight Night 65: Hunt vs. Miocic,May 9th 2015,Mark Hunt,120,195,220
+3,Stipe-Miocic-1869,Stipe Miocic,190,355,365,UFC on FOX 13: Dos Santos vs. Miocic,Dec 13th 2014,Junior Dos Santos,-270,-465,-400
+3,Stipe-Miocic-1869,Stipe Miocic,-505,-675,-650,UFC: The Ultimate Fighter Brazil 3 Finale,May 31st 2014,Fabio Maldonado,335,500,535
+3,Stipe-Miocic-1869,Stipe Miocic,-210,-310,-290,UFC on FOX 10: Henderson vs. Thomson,Jan 25th 2014,Gabriel Gonzaga,160,250,260
+3,Stipe-Miocic-1869,Stipe Miocic,190,110,122,UFC 260: Miocic vs. Ngannou 2,Mar 27th 2021,Francis Ngannou,-225,-144,-133
+3,Stipe-Miocic-1869,Stipe Miocic,-245,-174,-165,UFC 211: Miocic vs. Dos Santos 2,May 13th 2017,Junior Dos Santos,175,145,149
+3,Stipe-Miocic-1869,Stipe Miocic,180,210,250,UFC 161: Evans vs. Henderson,Jun 15th 2013,Roy Nelson,-260,-275,-270
+3,Stipe-Miocic-1869,Stipe Miocic,-260,-175,-165,UFC on FUEL TV 5: Struve vs. Miocic,Sep 29th 2012,Stefan Struve,180,155,155
+3,Stipe-Miocic-1869,Stipe Miocic,100,-170,-165,UFC 146: Dos Santos vs. Mir,May 26th 2012,Shane Del Rosario,-140,145,150
+3,Stipe-Miocic-1869,Stipe Miocic,-390,-515,-515,UFC on FUEL TV 1: Ellenberger vs. Sanchez,Feb 15th 2012,Philip de Fries,300,410,410
+3,Stipe-Miocic-1869,Stipe Miocic,-215,-280,-280,UFC 136: Edgar vs. Maynard 3,Oct 8th 2011,Joey Beltran,170,255,255
+3,Stipe-Miocic-1869,Stipe Miocic,,n/a,,Moosin: Gods Of Martial Arts,N/A,Paul Barry,,n/a,
+4,Cain-Velasquez-464,Cain Velasquez,-170,-210,-195,UFC on ESPN 1: Ngannou vs. Velasquez,Feb 17th 2019,Francis Ngannou,130,170,175
+4,Cain-Velasquez-464,Cain Velasquez,-300,-355,-330,UFC 200: Tate vs. Nunes,Jul 9th 2016,Travis Browne,220,270,295
+4,Cain-Velasquez-464,Cain Velasquez,-425,-470,-460,UFC 188: Velasquez vs. Werdum,Jun 13th 2015,Fabricio Werdum,355,365,370
+4,Cain-Velasquez-464,Cain Velasquez,-180,-215,-200,UFC 166: Velasquez vs. Dos Santos III,Oct 19th 2013,Junior Dos Santos,150,175,185
+4,Cain-Velasquez-464,Cain Velasquez,-600,-705,-700,UFC 160: Velasquez vs. Silva II,May 25th 2013,Antonio Silva,400,500,570
+4,Cain-Velasquez-464,Cain Velasquez,115,175,180,UFC 155: Dos Santos vs. Velasquez II,Dec 29th 2012,Junior Dos Santos,-135,-210,-190
+4,Cain-Velasquez-464,Cain Velasquez,-350,-400,-375,UFC 146: Dos Santos vs. Mir,May 26th 2012,Antonio Silva,250,315,355
+4,Cain-Velasquez-464,Cain Velasquez,-135,-125,-125,UFC On FOX 1: Velasquez vs. Dos Santos,Nov 12th 2011,Junior Dos Santos,105,115,115
+4,Cain-Velasquez-464,Cain Velasquez,150,155,155,UFC 121: Lesnar vs. Velasquez,Oct 23rd 2010,Brock Lesnar,-190,-165,-165
+4,Cain-Velasquez-464,Cain Velasquez,120,100,100,UFC 110: Nogueira vs. Velasquez,Feb 21st 2010,Antonio Rodrigo Nogueira,-150,-110,-110
+4,Cain-Velasquez-464,Cain Velasquez,-260,-315,-315,UFC 104: Machida vs Rua,Oct 24th 2009,Ben Rothwell,200,285,285
+4,Cain-Velasquez-464,Cain Velasquez,125,-175,-175,UFC 99: The Comeback,Jun 13th 2009,Cheick Kongo,-155,155,155
+4,Cain-Velasquez-464,Cain Velasquez,-580,-700,-700,UFC Fight Night 17: Lauzon vs Stephens,Feb 7th 2009,Denis Stojnic,415,500,500
+4,Cain-Velasquez-464,Cain Velasquez,100,-320,-320,UFC Fight Night 14: Silva vs Irvin,Jul 19th 2008,Jake O Brien,-140,260,260
+4,Cain-Velasquez-464,Cain Velasquez,-250,-250,-250,UFC 83: Serra vs St-Pierre 2,Apr 19th 2008,Brad Morris,190,210,210
+5,Travis-Browne-1769,Travis Browne,-180,-300,-255,UFC 213: Romero vs. Whittaker,Jul 8th 2017,Aleksei Oliynyk,140,185,252
+5,Travis-Browne-1769,Travis Browne,-125,-120,100,UFC Fight Night 105: Lewis vs. Browne,Feb 19th 2017,Derrick Lewis,-115,-125,103
+5,Travis-Browne-1769,Travis Browne,190,195,237,UFC 203: Miocic vs. Overeem,Sep 10th 2016,Fabricio Werdum,-270,-310,-259
+5,Travis-Browne-1769,Travis Browne,220,205,304,UFC 200: Tate vs. Nunes,Jul 9th 2016,Cain Velasquez,-300,-355,-275
+5,Travis-Browne-1769,Travis Browne,-190,-175,-155,UFC Fight Night 81: Dillashaw vs. Cruz,Jan 17th 2016,Matt Mitrione,150,125,153
+5,Travis-Browne-1769,Travis Browne,-405,-525,-390,UFC 187: Johnson vs. Cormier,May 23rd 2015,Andrei Arlovski,285,295,415
+5,Travis-Browne-1769,Travis Browne,-333,-600,-437,UFC 181: Hendricks vs. Lawler 2,Dec 6th 2014,Brendan Schaub,220,280,400
+5,Travis-Browne-1769,Travis Browne,-210,-385,-220,UFC on FOX 11: Werdum vs. Browne,Apr 19th 2014,Fabricio Werdum,160,180,215
+5,Travis-Browne-1769,Travis Browne,150,123,135,UFC 168: Weidman vs. Silva II,Dec 28th 2013,Josh Barnett,-190,-165,-135
+5,Travis-Browne-1769,Travis Browne,190,138,170,UFC Fight Night 26: Shogun vs. Sonnen,Aug 17th 2013,Alistair Overeem,-250,-233,-150
+5,Travis-Browne-1769,Travis Browne,-210,-275,-213,UFC: The Ultimate Fighter 17 Finale,Apr 13th 2013,Gabriel Gonzaga,160,175,225
+5,Travis-Browne-1769,Travis Browne,-280,-240,-179,UFC on FX 5: Browne vs. Bigfoot,Oct 5th 2012,Antonio Silva,200,161,180
+5,Travis-Browne-1769,Travis Browne,-155,-400,-275,UFC 145: Jones vs. Evans,Apr 21st 2012,Chad Griggs,125,215,270
+5,Travis-Browne-1769,Travis Browne,-400,-550,-401,UFC 135: Jones vs. Rampage,Sep 24th 2011,Rob Broughton,280,300,375
+5,Travis-Browne-1769,Travis Browne,-140,-150,-115,UFC 130: Rampage vs. Hamill,May 28th 2011,Stefan Struve,100,-115,118
+5,Travis-Browne-1769,Travis Browne,175,153,168,UFC 120: Bisping vs. Akiyama,Oct 16th 2010,Cheick Kongo,-245,-233,-170
+5,Travis-Browne-1769,Travis Browne,-145,-215,-185,UFC: The Ultimate Fighter 11 Finale,Jun 19th 2010,James McSweeney,115,155,175
