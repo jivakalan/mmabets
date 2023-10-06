@@ -1,0 +1,39 @@
+{
+
+    "index": ["fighter_dim",
+            "fight_outcome_fact",
+            "main_fight_fact",
+            "fighter_record_fact",
+            "fight_strike_location_fact",
+            "fight_odds_fact"
+            ],
+    "primary_keys": [
+            ["Fighter_ID"],
+            ["Fighter_ID", "Fight_ID"],
+            ["Fighter_ID", "Fight_ID", "Round"],
+            ["Fight_ID"],
+            ["Fighter_ID", "Fight_ID"],
+            ["Matchup"]
+        ],
+    "production": {
+        "filepaths": [
+            "extract/data/database/fighter_dim.csv",
+            "extract/data/database/fight_outcome_fact.csv",
+            "extract/data/database/main_fight_fact.csv",
+            "extract/data/database/fighter_record_fact.csv",
+            "extract/data/database/fight_strike_location_fact.csv",
+            "extract/data/database/fight_odds_fact.csv"
+        ]
+
+    },
+    "testing": {
+        "filepaths": [
+            "extract/data/testing/fighter_dim.csv",
+            "extract/data/testing/fight_outcome_fact.csv",
+            "extract/data/testing/main_fight_fact.csv",
+            "extract/data/testing/fighter_record_fact.csv",
+            "extract/data/testing/fight_strike_location_fact.csv",
+            "extract/data/testing/fight_odds_fact.csv"
+        ]
+    }
+}

@@ -1,11 +1,6 @@
-import os
-import sys
-####################################################
-#Add the project root directory to the Python path
-path = os.path.join(os.path.dirname(__file__), "..")
-project_root = os.path.abspath(path)
-sys.path.append(project_root)
-####################################################
+#####################################################################
+##                          Imports                              ###
+####################################################################
 from extract.crawl_best_fight_odds import *
 from extract.crawl_fighters import *
 from extract.crawl_ufc_fight_data import *

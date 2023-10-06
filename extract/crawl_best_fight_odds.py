@@ -104,7 +104,7 @@ def crawl_odds(fighters_list):
     browser = webdriver.Firefox(options=chrome_options, service=service)
     ####### #execute# ###################################################
     bestOddsDataDf = get_all_profiles_data(browser,fighters_list)
-
+    browser.quit()
     return bestOddsDataDf
 
 
