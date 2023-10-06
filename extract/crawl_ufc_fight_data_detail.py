@@ -65,7 +65,7 @@ def crawl_main_fight_fact(FightLinks):
     Control_Time_1 = []
 
 
-    for url in tqdm(FightLinks, desc="Progress of 3rd extract"):
+    for url in tqdm(FightLinks, desc="Progress of Main Fight Fact"):
         req1 = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         page_html1 = uReq(req1).read()
         page_soup1 = soup(page_html1, "html.parser")
@@ -367,7 +367,7 @@ def crawl_fighter_record_fact(FightLinks):
     Referee = []
     Details = []
 
-    for url in tqdm(FightLinks, desc="Progress of 3rd extract"):
+    for url in tqdm(FightLinks, desc="Progress of Fighter Record Fact"):
         req1 = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         page_html1 = uReq(req1).read()
         page_soup1 = soup(page_html1, "html.parser")
@@ -477,7 +477,7 @@ def crawl_fight_strike_location_fact(FightLinks):
     Ground_1_Pct = []
 
 
-    for url in tqdm(FightLinks, desc="Progress of 3rd extract"):
+    for url in tqdm(FightLinks, desc="Progress of Strike Location Fact"):
         req1 = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         page_html1 = uReq(req1).read()
         page_soup1 = soup(page_html1, "html.parser")
@@ -593,21 +593,3 @@ def crawl_fight_strike_location_fact(FightLinks):
 
     return data3
 
-
-# load only activefighters
-#with open('extract/data/outputs/ufc_ActiveFighters.json', 'r') as json_file:
-#    FighterLinks = json.load(json_file)
-# load FightLinks
-#with open('extract/data/outputs/fightLinks.json', 'r') as json_file:
-#    FightLinks = json.load(json_file)
-#FightLinks =FightLinks[0:10]
-
-#data1 = crawl_main_fight_fact(FightLinks)
-#df1=pd.DataFrame(data=data1)
-
-#data2 = crawl_fighter_record_fact(FightLinks)
-#df2=pd.DataFrame(data=data2)
-#result = df2[df2.Fight_ID=='f085f32bbb3220e1']
-#result['Fight_format']
-#data3 = crawl_fight_strike_location_fact(FightLinks)
-#df3=pd.DataFrame(data=data3)
