@@ -1,76 +1,59 @@
-#############
-## Imports ##
-#############
+####################################################################
+##                          Imports                             ###
 import pandas as pd
 import numpy as np
 import xgboost as xgb
-from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import precision_score
-
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import confusion_matrix
+from train.tools.helper import *
+import pickle
+# from train.tools.evaluator import *
+# todo update yml file conda env update
+####################################################################
 
 ###################
 # Get dataset #####
 ###################
 
-full_fights = pd.read_csv('full_fights.csv')
+df_ds_dataset = pd.read_csv('train/data/ds_dataset.csv', index_col = False)
+print(df_ds_dataset.shape)
+df_ds_dataset =df_ds_dataset.drop_duplicates()
+print(df_ds_dataset.shape)
+df_ds_dataset['Fight_ID'] = df_ds_dataset['Fight_ID'].astype('category')
+df_ds_dataset['Fighter_ID_0'] = df_ds_dataset['Fighter_ID_0'].astype('category')
+df_ds_dataset['Fighter_ID_1'] = df_ds_dataset['Fighter_ID_1'].astype('category')
 
-column_names = [ '','','']
-train_set = pd.read_csv('', names =column_names)
 
-test_set = pd.read_csv('',skiprows=1,names = column_names)
+X = df_ds_dataset.drop(columns=['Fighter_0_Outcome','Fight_ID','Fighter_ID_0','Fighter_ID_1'])  # Features
+y = df_ds_dataset['Fighter_0_Outcome']  # Target
+
+# split train + temp set (80-20 train-temp)
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# split test + validation ste (
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.75, random_state=42)
+
+del X_temp, y_temp
 
 ##get some initial info
-train_set.info()
-test_set.info() 
-##remove whitespaces and deal with ? values
-train_set.replace(' ?',np.nan,inplace=True)
-test_set.replace(' ?',np.nan,inplace=True)
+X_train.info()
+X_test.info()
 
-#remove dupes
-train_set= train_set.drop_duplicates()
-test_set = test_set.drop_duplicates()
+# descr table will have std dev and mean values for use in extreme_cap fn
+descr_table = X_train.describe()
+a= X_test.describe()
 
-##descr table will have std dev and mean values for use in extreme_cap fn 
-descr_table = train_set.describe()
-a= test_set.describe()
-
-##counts/unique values
+column_names =  X_train.columns.tolist()
+# counts/unique values
 for name in column_names:
-    print(train_set[name].value_counts())
+    print(X_train[name].value_counts())
 ##unique values
 for name in column_names:
-    print(name, train_set[name].unique())
+    print(name, X_train[name].unique())
  
-#cols_to_filter =["age","education_num","capital_gain","hrs_per_week","fnlwgt","capital_loss"]
-
-
-######################
-## Helper functions ##
-######################
-    
-#function to cap extreme values 
-def extreme_cap(df, num_std_dev):
-    df_capped = df
-    for col in descr_table:
-        v = descr_table[col]["std"]*num_std_dev
-        hi = descr_table[col]["mean"]+v
-        lo = descr_table[col]["mean"]-v
-        df_capped[col]=df_capped[col].apply(lambda x: hi if x > hi else x)
-        df_capped[col]=df_capped[col].apply(lambda x: lo if x < lo else x)
-    return df_capped
-
-
-def model_evaluate(predictions):
-    print('AUC:', round(roc_auc_score(y_true=test_target
-                                     ,y_score=predictions)*100
-                        ,2))
-    print('Precision:', round(precision_score(y_true=test_target
-                                            , y_pred= predictions
-                                            , average='weighted')*100
-                            ,2))
-
 
 
 
@@ -80,44 +63,9 @@ def model_evaluate(predictions):
 
 ##run this if want to cap values
 #cap values in train set
-train_set = extreme_cap(train_set, 1.5)
+# X_train = extreme_cap(X_train, 1.5)
 ##cap extreme values on test set 
-test_set = extreme_cap(test_set, 1.5)
-
-
-#convert income to binary output
-train_set["income"] = train_set["income"].apply(lambda x: 0 if x==' <=50K' else 1)
-test_set["income"] = test_set["income"].apply(lambda x: 0 if x==' <=50K.' else 1)
-
-
-#split target from features
-train_features, train_target = train_set.iloc[:,:-1], train_set.iloc[:,-1]
-test_features, test_target = test_set.iloc[:,:-1], test_set.iloc[:,-1]
-
-#one-hot encoding for categorical variables
-col_cat =["workclass","education","marital_status","occupation","relationship","race","sex","native_country"] 
-
-for name in col_cat:
-    name_df = pd.DataFrame( train_features[name])
-    dum_df  = pd.get_dummies(name_df, prefix=[name+'_'] )
-    train_features = train_features.join(dum_df)
-    
-train_features.drop(col_cat, axis='columns',inplace=True)
- 
-
-##one-hot-encoding test features
-for name in col_cat:
-    name_df = pd.DataFrame(test_features[name])
-    dum_df  = pd.get_dummies(name_df, prefix=[name+'_'] )
-    test_features = test_features.join(dum_df)
-    
-test_features.drop(col_cat, axis='columns',inplace=True)
-
-##add column native_country__ Holand-Netherlands so that columns are same in test and train
-test_features["native_country__ Holand-Netherlands"]=0
-#sorting test and train features so order is identical
-test_features = test_features.reindex(sorted(test_features.columns), axis=1)
-train_features = train_features.reindex(sorted(train_features.columns), axis=1)
+# X_test = extreme_cap(X_test, 1.5)
 
 
 ######################
@@ -130,51 +78,89 @@ xgb_model = xgb.XGBClassifier( objective= 'binary:logistic'
                          , max_depth=10
                          , verbosity =0
                          )
-xgb_model.fit(train_features, train_target)
+xgb_model.fit(X_train, y_train)
 
 #######################
 ## XGB Performance   ##
 #######################
+def get_performance(model, X_test, X_val, y_test, y_val, dataset='test'):
+    if dataset == 'test':
+        prediction_set =X_test
+        ground_truth = y_test
+    if dataset == 'validation':
+        prediction_set =X_val
+        ground_truth = y_val
 
-xgb_preds =xgb_model.predict(test_features)
-model_evaluate(xgb_preds)
+    predictions = model.predict(prediction_set)
+    predictions = pd.Series(predictions)
 
+    classes_to_include =[0,1]
+    filtered_indices = [i for i,label in enumerate(ground_truth) if label in classes_to_include]
+
+    y_test_array = np.array(ground_truth)
+
+    y_test_filtered = y_test_array[filtered_indices]
+    xgb_preds_filtered = predictions[filtered_indices]
+
+    # Calculate accuracy for the filtered classes: 60%
+    accuracy = accuracy_score(y_test_filtered, xgb_preds_filtered)
+    print("Accuracy for classes 1 and 2:", round(accuracy * 100, 2))
+
+    # Calculate the confusion matrix for the filtered classes
+    cm = confusion_matrix(y_test_filtered, xgb_preds_filtered, labels=classes_to_include)
+    print("Confusion Matrix for classes 1 and 2:\n", cm)
+
+    return
+
+
+get_performance(xgb_model, X_test, X_val, y_test, y_val,dataset = 'test') #86.56
+get_performance(xgb_model, X_test, X_val, y_test, y_val,dataset = 'validation') #90.8
+
+with open('train/model/xgb_model.pkl','wb') as model_file:
+    pickle.dump(xgb_model,model_file)
+with open('score/model/xgb_model.pkl','wb') as model_file:
+    pickle.dump(xgb_model,model_file)
 
 ############################
 ## Model 2 - RandomForest ##
 ############################
 
-model_rf = RandomForestClassifier(n_estimators= 100 ##num trees
+model_rf = RandomForestClassifier(n_estimators= 30 ##num trees
                                  , max_depth=10     ##num levels in forest
                                  , random_state=0   
                                  , min_samples_split =2  #min num samples to split on
                                  , min_samples_leaf = 2    #min samples at each node
                                  )
-
-model_rf.fit(train_features, train_target)
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='constant', fill_value=0)),  # Replace missing values with 0s
+    ('classifier', model_rf)  # Your RandomForestClassifier
+])
+pipeline.fit(X_train, y_train)
 
 
 ###############################
 ## Randomforest Performance ##
 ##############################
+# Make predictions
+rf_preds = pipeline.predict(X_test)
 
-rf_preds = model_rf.predict(test_features)
-model_evaluate(rf_preds)
-
-
-##variable importance plot 
-var_imp = model_rf.feature_importances_
-feature_names = pd.DataFrame(train_features.columns)
-var_imp_pd = pd.DataFrame(var_imp)
-
-var_imp_merge = pd.concat([var_imp_pd,feature_names],axis=1)
-var_imp_merge.columns =['Importance','Feature']
-var_imp_merge=var_imp_merge.sort_values(by='Importance', ascending=False)
+#get_performance
+get_performance(pipeline, X_test, X_val, y_test, y_val,dataset = 'test')  # 84.05
+get_performance(pipeline,X_test, X_val, y_test, y_val,dataset = 'validation') #86.22
 
 
+# Get variable importances
+var_imp = pipeline.named_steps['classifier'].feature_importances_
+feature_names = X_train.columns
+
+var_imp_merge = pd.DataFrame({'Importance': var_imp, 'Feature': feature_names})
+var_imp_merge = var_imp_merge.sort_values(by='Importance', ascending=False)
+
+# Check out the top 10 most important features
 var_plot = var_imp_merge.head(10)
-
-var_plot.plot.bar(x='Feature',y='Importance')
+print(var_plot)
 
 #################################################################################
 #########################################
@@ -182,7 +168,7 @@ var_plot.plot.bar(x='Feature',y='Importance')
 #########################################
 
 
-grid = { 'n_estimators': list(range(75,300, 25))
+grid = { 'n_estimators': list(range(15,50, 5))
        , 'max_depth': list(range(5,50, 5))
        , 'min_samples_split': [2,4,6]
        , 'min_samples_leaf': [1,2,3,4]
@@ -191,23 +177,30 @@ grid = { 'n_estimators': list(range(75,300, 25))
 rf_tuning = RandomizedSearchCV(  estimator=model_rf
                                , param_distributions= grid
                                , n_iter = 10
-                               , scoring='roc_auc'
+                               , scoring='neg_log_loss'  #for multiclass scoring...hm
                                , cv = 5
                                , verbose=2
                                , random_state=0
                                , return_train_score=True)
 
+tuning_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='constant', fill_value=0)),  # Replace missing values with 0s
+    ('classifier', rf_tuning)  # Your RandomForestClassifier
+])
 ## this will take a few minutes
-rf_tuning.fit(train_features, train_target)
+tuning_pipeline.fit(X_train, y_train)
 
-best_params_rf= rf_tuning.best_params_
+best_params_rf = rf_tuning.best_params_
 best_model = rf_tuning.best_estimator_
-best_model.fit(train_features,train_target)
-best_preds = best_model.predict(test_features)
 
-best_roc = roc_auc_score(y_true=test_target, y_score=best_preds)
-print('Tuned AUC:', round(best_roc*100,2))
+best_pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='constant', fill_value=0)),  # Replace missing values with 0s
+    ('classifier', best_model)  # Your RandomForestClassifier
+])
 
+best_pipeline.fit(X_train,y_train)
+get_performance(best_pipeline,X_test,X_val,y_test,y_val,dataset='test')  # 83.98
+get_performance(best_pipeline,X_test,X_val,y_test,y_val,dataset='validation') #86.85
 
 ##############################
 ## Model 2 - Neural Network ##
@@ -216,18 +209,35 @@ print('Tuned AUC:', round(best_roc*100,2))
 from keras.models import Sequential
 from keras.layers import Dense
 
+
+df_ds_dataset_nn = df_ds_dataset[df_ds_dataset.Fighter_0_Outcome.isin([0,1])]
+
+X = df_ds_dataset_nn.drop(columns=['Fighter_0_Outcome','Fight_ID','Fighter_ID_0','Fighter_ID_1'])  # Features
+y = df_ds_dataset_nn['Fighter_0_Outcome']  # Target
+
+# split train + temp set (80-20 train-temp)
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# split test + validation ste (
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.75, random_state=42)
+
+del X_temp, y_temp
+
 model_nn = Sequential()
-model_nn.add(Dense(12, input_dim=105, activation='relu'))
+model_nn.add(Dense(12, input_dim=68, activation='relu'))
 model_nn.add(Dense(8, activation='relu'))
 model_nn.add(Dense(1, activation='sigmoid'))
 
+
+
 model_nn.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
 
-model_nn.fit(train_features, train_target, epochs = 50, batch_size = 100)
+model_nn.fit(X_train, y_train, epochs = 50, batch_size = 100)
 
-nn_preds = model_nn.predict(test_features)
+nn_preds = model_nn.predict(X_test)
 nn_preds = [round(x[0]) for x in nn_preds]
-model_evaluate(nn_preds)
+
+
 
 
 

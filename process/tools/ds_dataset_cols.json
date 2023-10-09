@@ -1,0 +1,58 @@
+{
+    "cumulative_cols_0": [
+        "Knockdowns_0_cumulative",
+        "Significant_Strikes_0_cumulative",
+        "Total_Strikes_0_cumulative",
+        "Head_0_cumulative",
+        "Body_0_cumulative",
+        "Legs_0_cumulative",
+        "Distance_0_cumulative",
+        "Clinch_0_cumulative",
+        "Ground_0_cumulative",
+        "Takedowns_0_cumulative",
+        "Submission_Attempt_0_cumulative",
+        "Rev_0_cumulative",
+        "Control_Time_0_Seconds_cumulative"
+    ],
+    "cumulative_cols_1": [
+        "Knockdowns_1_cumulative",
+        "Significant_Strikes_1_cumulative",
+        "Total_Strikes_1_cumulative",
+        "Head_1_cumulative",
+        "Body_1_cumulative",
+        "Legs_1_cumulative",
+        "Distance_1_cumulative",
+        "Clinch_1_cumulative",
+        "Ground_1_cumulative",
+        "Takedowns_1_cumulative",
+        "Submission_Attempt_1_cumulative",
+        "Rev_1_cumulative",
+        "Control_Time_1_Seconds_cumulative"
+    ],
+    "cumulative_demo_cols": [
+        "Result_win_cumulative",
+        "Result_loss_cumulative",
+        "Result_nc_cumulative",
+        "Result_draw_cumulative",
+        "METHOD_CNC_cumulative",
+        "METHOD_DQ_cumulative",
+        "METHOD_Decision_cumulative",
+        "METHOD_KO/TKO_cumulative",
+        "METHOD_M-DEC_cumulative",
+        "METHOD_Other_cumulative",
+        "METHOD_Overturned_cumulative",
+        "METHOD_S-DEC_cumulative",
+        "METHOD_SUB_cumulative",
+        "METHOD_U-DEC_cumulative"
+    ],
+    "demo_cols": [
+            "HT_cm",
+            "WT_numeric",
+            "Reach_cm",
+            "STANCE_Sideways",
+            "STANCE_Southpaw",
+            "STANCE_Orthodox",
+            "STANCE_Switch"
+    ],
+    "odds_cols": ["Open", "Closing Range", "Close Start Range","Close End Range", "Movement"]
+}

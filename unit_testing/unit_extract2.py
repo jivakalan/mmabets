@@ -214,7 +214,7 @@ def test_run_pipeline():
     assert result == expected_result
 
 
-
+# Test crawler functionality
 def test_crawler_0_0():
     crawler(active=0,update=0, environment='testing')
     return
@@ -222,3 +222,5 @@ def test_crawler_0_0():
 def test_crawler_1_0():
     crawler(active=1,update=0, environment='testing')
     return
+
+# todo test_crawler_1_1 and test_crawler_0_1
